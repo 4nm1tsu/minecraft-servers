@@ -1,0 +1,27 @@
+# Default values for minecraft-mod.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# ********REQUIRED********
+node:
+  hostname: 'ubuntu3' # Your kube node's hostname
+# ************************
+
+minecraft:
+  gamemode: 'survival'
+  motd: "Welcome to 4nm1tsu's k8s modded server!" # Message of the Day
+  port: 25565
+  nodeport: 25566
+
+volume:
+  storage: 10Gi
+  path: '/mnt/local-volumes/minecraft' # Path to wherever you want to save your worldfile
+
+resources:
+  limits:
+    memory: 8G
+  requests:
+    memory: 7G
+
+serviceAccount:
+  create: true

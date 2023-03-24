@@ -1,0 +1,76 @@
+# docker run -d -it -v /path/on/host:/data -e EULA=TRUE -p 25565:25565 --name mc itzg/minecraft-mod-server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft-mod-server
+  labels:
+    app: minecraft-mod-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minecraft-mod-server
+  template:
+    metadata:
+      labels:
+        app: minecraft-mod-server
+    spec:
+      volumes:
+      - name: minecraft-mod-data
+        persistentVolumeClaim:
+          claimName: minecraft-mod-data-pvc
+      containers:
+      - name: minecraft-mod-server
+        image: itzg/minecraft-server:latest
+        resources:
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
+        env:
+          - name:  EULA
+            value: 'TRUE'
+          - name: MODE
+            value: {{ .Values.minecraft.gamemode }}
+          - name: MOTD
+            value: {{ .Values.minecraft.motd }}
+          - name: ALLOW_FLIGHT
+            value: 'TRUE'
+          - name: MAX_MEMORY
+            value: 8G
+          - name: INIT_MEMORY
+            value: 7G
+          - name: TZ
+            value: Asia/Tokyo
+          - name: TYPE
+            value: FORGE
+          - name: VERSION
+            value: '1.19.2'
+          - name: FORGE_FORCE_REINSTALL
+            value: 'true'
+          - name: DEBUG
+            value: 'true'
+          #- name: RCON_PORT
+            #value: '25576'
+        ports:
+        - containerPort: {{ .Values.minecraft.port }}
+          name: minecraft
+        volumeMounts:
+          - name: minecraft-mod-data
+            mountPath:  /data
+        readinessProbe:
+          exec:
+            command:
+            - mcstatus
+            - 127.0.0.1
+            - ping
+          initialDelaySeconds: 200
+          periodSeconds: 30
+        livenessProbe:
+          exec:
+            command:
+            - mcstatus
+            - 127.0.0.1
+            - ping
+          initialDelaySeconds: 200
+          periodSeconds: 30

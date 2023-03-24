@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: minecraft-mod-server
+  namespace: minecraft-mod
+  labels:
+    app: minecraft-mod-server
+spec:
+  type: NodePort
+  ports:
+    - port: {{ .Values.minecraft.port }}
+      nodePort: {{ .Values.minecraft.nodeport }}
+  selector:
+    app: minecraft-mod-server
