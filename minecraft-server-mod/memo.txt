@@ -1,0 +1,8 @@
+grep -rl minecraft . | xargs sed -i 's/minecraft/minecraft-mod/g'
+このあとValues.minecraft-modだけValues.minecraftにした
+
+helm/minecraft/templates/deployment.yaml:        image: itzg/minecraft-mod-server:latest
+↑これももとに戻す
+
+workerに作るディレクトリもminecraft-modにする
+helm install minecraft-mod helm/minecraft --namespace minecraft-mod --create-namespace でインストール

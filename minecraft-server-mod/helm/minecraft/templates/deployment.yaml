@@ -21,7 +21,7 @@ spec:
           claimName: minecraft-mod-data-pvc
       containers:
       - name: minecraft-mod-server
-        image: itzg/minecraft-server:latest
+        image: itzg/minecraft-server:java8-multiarch
         resources:
           limits:
             memory: {{ .Values.resources.limits.memory }}
@@ -45,11 +45,13 @@ spec:
           - name: TYPE
             value: FORGE
           - name: VERSION
-            value: '1.19.2'
-          - name: FORGE_FORCE_REINSTALL
-            value: 'true'
-          - name: DEBUG
-            value: 'true'
+            value: '1.12.2'
+          - name: JVM_OPTS
+            value: '-Dfml.queryResult=confirm '
+          #- name: FORGE_FORCE_REINSTALL
+            #value: 'false'
+          #- name: DEBUG
+            #value: 'false'
           #- name: RCON_PORT
             #value: '25576'
         ports:
@@ -64,7 +66,7 @@ spec:
             - mcstatus
             - 127.0.0.1
             - ping
-          initialDelaySeconds: 200
+          initialDelaySeconds: 400
           periodSeconds: 30
         livenessProbe:
           exec:
@@ -72,5 +74,5 @@ spec:
             - mcstatus
             - 127.0.0.1
             - ping
-          initialDelaySeconds: 200
+          initialDelaySeconds: 400
           periodSeconds: 30
