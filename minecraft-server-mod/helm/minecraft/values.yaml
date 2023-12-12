@@ -4,14 +4,14 @@
 
 # ********REQUIRED********
 node:
-  hostname: 'ubuntu3' # Your kube node's hostname
+  hostname: 'ubuntu4' # Your kube node's hostname
 # ************************
 
 minecraft:
   gamemode: 'survival'
   motd: "Welcome to 4nm1tsu's k8s modded server!" # Message of the Day
   port: 25565
-  nodeport: 25566
+  nodeport: 25565
 
 volume:
   storage: 10Gi
@@ -19,9 +19,9 @@ volume:
 
 resources:
   limits:
-    memory: 8G
+    memory: 12G
   requests:
-    memory: 7G
+    memory: 11G
 
 serviceAccount:
   create: true

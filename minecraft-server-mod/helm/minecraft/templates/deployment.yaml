@@ -37,17 +37,19 @@ spec:
           - name: ALLOW_FLIGHT
             value: 'TRUE'
           - name: MAX_MEMORY
-            value: 8G
+            value: 12G
           - name: INIT_MEMORY
-            value: 7G
+            value: 11G
           - name: TZ
             value: Asia/Tokyo
           - name: TYPE
             value: FORGE
           - name: VERSION
-            value: '1.12.2'
+            value: '1.16.5'
           - name: JVM_OPTS
             value: '-Dfml.queryResult=confirm '
+          - name: DIFFICULTY
+            value: 'hard'
           #- name: FORGE_FORCE_REINSTALL
             #value: 'false'
           #- name: DEBUG
